@@ -1,4 +1,4 @@
-21649298238212495
+21656101749146343
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -79261,6 +79261,13 @@ Display_OLED_0,96
 8
 4
 Pia_Lib
+Drahtschalter
+
+
+0
+0
+0
+Pia_Lib
 ESP32_C3_Wroom_02-easysolder
 
 
@@ -79269,6 +79276,27 @@ ESP32_C3_Wroom_02-easysolder
 19
 Pia_Lib
 Encoder KY-040
+
+
+0
+5
+5
+Pia_Lib
+QRCode
+
+
+0
+0
+0
+Pia_Lib
+QRCode1x1
+
+
+0
+0
+0
+Pia_Lib
+SOT-23-5-easysolder
 
 
 0
