@@ -1,5 +1,10 @@
 #pragma once
 #include <Arduino.h>
+
+/*
+    For debouncing purpose, each Button has to "know" when it was pressed last.
+    Making the separation more easy, those functions were put into their own class.  
+*/
 class Time{
     unsigned long time_since_last_button_pressed = 0;
 
@@ -23,19 +28,15 @@ class Time{
 
 };
 
+
+/*
+    Handles if a Button was pressed
+*/
 class Button{
     private:
-        bool button_is_pressed = 0;
         bool button_state_changed = 0;
 
     public:
-        inline bool GetIsPressed(){
-            return button_is_pressed;
-        }
-
-        inline bool SetIsPressed(bool value){
-            return button_is_pressed = value;
-        }
 
         inline bool SetStateChanged(bool value){
             return button_state_changed = value;
