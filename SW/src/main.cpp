@@ -23,19 +23,13 @@ void setup() {
   InitButtons();
   ledOn(led_yellow_pin);
 
-  attachInterrupt(digitalPinToInterrupt(button_left), OnButtonPressRiseLeft, RISING);
-  attachInterrupt(digitalPinToInterrupt(button_left), OnButtonPressFallLeft, FALLING);
-
-  attachInterrupt(digitalPinToInterrupt(button_middle), OnButtonPressRiseMiddle, RISING);
-  attachInterrupt(digitalPinToInterrupt(button_middle), OnButtonPressFallMiddle, FALLING);
-
-  attachInterrupt(digitalPinToInterrupt(button_right), OnButtonPressRiseRight, RISING);
-  attachInterrupt(digitalPinToInterrupt(button_right), OnButtonPressFallRight, FALLING);  
+   
 }
 
 void loop() {
   readEncoder();
   printDelta();
+  
 
 }
 
