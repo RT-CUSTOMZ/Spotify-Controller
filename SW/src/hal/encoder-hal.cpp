@@ -3,88 +3,75 @@
 #include "pinconfig.h"
 #include "led-hal.h"
 
-static int16_t inputDelta = 0;             // Counts up or down depending which way the encoder is turned
-static bool printFlag = false;             // Flag to indicate that the value of inputDelta should be printed
+static int16_t StepDelta = 0;             // Counts up or down depending which way the encoder is turned
+static bool outputCount = false;             // Flag to indicate that the value of inputDelta should be printed
+
+enum EncoderState {
+  InitState,
+  ClockwiseRotationA,  
+  ClockwiseRotationB,  
+  ClockwiseRotationC,  
+  CounterClockwiseRotationA,
+  CounterClockwiseRotationB,
+  CounterClockwiseRotationC,
+};
 
 void readEncoder() {
-    static uint8_t state = 0;
-    bool CLKstate = digitalRead(encoder_clk);
-    bool DTstate = digitalRead(encoder_dt);
+    static EncoderState state = EncoderState::InitState;
+    bool CLK = digitalRead(encoder_clk);
+    bool DT = digitalRead(encoder_dt);
 
     switch (state) {
-        case 0:                         // Idle state, encoder not turning
-            if (!CLKstate){             // Turn clockwise and CLK goes low first
-                ledOff(led_dual_green);
-                ledOff(led_dual_green);
-                ledOff(led_yellow_pin);
-                state = 1;
-            } else if (!DTstate) {      // Turn anticlockwise and DT goes low first
-                ledOn(led_dual_green);
-                ledOff(led_dual_green);
-                ledOff(led_yellow_pin);
-                state = 4;
+        case EncoderState::InitState:                         // Idle state, encoder not turning
+            if (!CLK){                  // Turn clockwise and CLK goes low first
+                state = EncoderState::ClockwiseRotationA;
+            } else if (!DT) {           // Turn anticlockwise and DT goes low first
+                state = EncoderState::CounterClockwiseRotationA;
             }
             break;
+        
         // Clockwise rotation
-        case 1:                     
-            if (!DTstate) {             // Continue clockwise and DT will go low after CLK
-                ledOff(led_dual_red);
-                ledOn(led_dual_green);
-                ledOff(led_yellow_pin);
-                state = 2;
+        case EncoderState::ClockwiseRotationA:                     
+            if (!DT) {                  // Continue clockwise and DT will go low after CLK
+                state = EncoderState::ClockwiseRotationB;
             } 
             break;
-        case 2:
-            if (CLKstate) {             // Turn further and CLK will go high first
-                ledOn(led_dual_red);
-                ledOn(led_dual_green);
-                ledOff(led_yellow_pin);
-                state = 3;
+        case EncoderState::ClockwiseRotationB:
+            if (CLK) {                  // Turn further and CLK will go high first
+                state = EncoderState::ClockwiseRotationC;
             }
             break;
-        case 3:
-            if (CLKstate && DTstate) {  // Both CLK and DT now high as the encoder completes one step clockwise
-                ledOff(led_dual_red);
-                ledOff(led_dual_green);
-                ledOn(led_yellow_pin);
-                state = 0;
-                ++inputDelta;
-                printFlag = true;
+        case EncoderState::ClockwiseRotationC:
+            if (CLK && DT) {            // Both CLK and DT now high as the encoder completes one step clockwise
+                state = EncoderState::InitState;
+                ++StepDelta;
+                outputCount = true;
             }
             break;
         // Anticlockwise rotation
-        case 4:                         // As for clockwise but with CLK and DT reversed
-            if (!CLKstate) {
-                ledOn(led_dual_red);
-                ledOff(led_dual_green);
-                ledOn(led_yellow_pin);
-                state = 5;
+        case EncoderState::CounterClockwiseRotationA:                         // As for clockwise but with CLK and DT reversed
+            if (!CLK) {
+                state = EncoderState::CounterClockwiseRotationB;
             }
             break;
-        case 5:
-            if (DTstate) {
-                ledOff(led_dual_red);
-                ledOn(led_dual_green);
-                ledOn(led_yellow_pin);
-                state = 6;
+        case EncoderState::CounterClockwiseRotationB:
+            if (DT) {
+                state = EncoderState::CounterClockwiseRotationC;
             }
             break;
-        case 6:
-            if (CLKstate && DTstate) {
-                ledOn(led_dual_red);
-                ledOn(led_dual_green);
-                ledOn(led_yellow_pin);
-                state = 0;
-                --inputDelta;
-                printFlag = true;
+        case EncoderState::CounterClockwiseRotationC:
+            if (CLK && DT) {
+                state = EncoderState::InitState;
+                --StepDelta;
+                outputCount = true;
             }
             break; 
     }
 }
 
 void printDelta() {
-    if (printFlag) {
-        printFlag = false;
-        Serial.println(inputDelta);
+    if (outputCount) {
+        outputCount = false;
+        Serial.println(StepDelta);
     }
 }

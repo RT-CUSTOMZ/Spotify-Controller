@@ -6,49 +6,43 @@
 extern Button buttonLeft;
 extern Button buttonMiddle;
 extern Button buttonRight;
+extern Button buttonEncoder;
 
 const uint16_t time_to_change = 250;
 
 
-
-void OnButtonPressFallLeft() {
-    if((millis()-buttonLeft.GetTimeLastPressed())>time_to_change){
-
-        Serial.printf("P1\t%d\n", millis()-buttonMiddle.GetTimeLastPressed());
+void OnButtonLeftPress() {
+    if(buttonLeft.ms.TimeDifferenceOk(time_to_change)){
         buttonLeft.SetStateChanged(true);
-        buttonLeft.SetIsPressed(false);
-
-        buttonLeft.SetTimeLastPressed();
     }
 }
 
-void OnButtonPressFallMiddle() {
-    if((millis()-buttonMiddle.GetTimeLastPressed())>time_to_change){
-        Serial.printf("P2\t%d\n", millis()-buttonMiddle.GetTimeLastPressed());
-
+void OnButtonMiddlePress() {
+    if(buttonMiddle.ms.TimeDifferenceOk(time_to_change)){
         buttonMiddle.SetStateChanged(true);
-        buttonMiddle.SetIsPressed(false);
-
-        buttonMiddle.SetTimeLastPressed();
     }
 }
 
-void OnButtonPressFallRight() {
-    if((millis()-buttonRight.GetTimeLastPressed())>time_to_change){
-        Serial.printf("P3\t%d\n", millis()-buttonMiddle.GetTimeLastPressed());
+void OnButtonRightPress() {
+    if(buttonRight.ms.TimeDifferenceOk(time_to_change)){
         buttonRight.SetStateChanged(true);
-        buttonRight.SetIsPressed(false);
-
-        buttonRight.SetTimeLastPressed();
+    }
+}
+void OnButtonEncoderPress() {
+    if(buttonEncoder.ms.TimeDifferenceOk(time_to_change)){
+        buttonEncoder.SetStateChanged(true);
     }
 }
 
 void InitButtons(){
-    buttonLeft.SetTimeLastPressed();
-    buttonMiddle.SetTimeLastPressed();
-    buttonRight.SetTimeLastPressed();
-    buttonRight.SetTimeLastPressed();
-  attachInterrupt(digitalPinToInterrupt(button_left), OnButtonPressFallLeft, FALLING);
-  attachInterrupt(digitalPinToInterrupt(button_middle), OnButtonPressFallMiddle, FALLING);
-  attachInterrupt(digitalPinToInterrupt(button_right), OnButtonPressFallRight, FALLING);
+    buttonLeft.ms.SetLastPressed();
+    buttonMiddle.ms.SetLastPressed();
+    buttonRight.ms.SetLastPressed();
+    buttonEncoder.ms.SetLastPressed();
+    
+    attachInterrupt(digitalPinToInterrupt(button_left), OnButtonLeftPress, FALLING);
+    attachInterrupt(digitalPinToInterrupt(button_middle), OnButtonMiddlePress, FALLING);
+    attachInterrupt(digitalPinToInterrupt(button_right), OnButtonRightPress, FALLING);
+    attachInterrupt(digitalPinToInterrupt(encoder_sw), OnButtonEncoderPress, FALLING);
 }
+
