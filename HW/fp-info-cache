@@ -1,4 +1,4 @@
-21656101749146343
+21661204786473943
 Audio_Module
 Reverb_BTDR-1H
 Digital Reverberation Unit, http://www.belton.co.kr/inc/downfile.php?seq=17&file=pdf (footprint from http://www.uk-electronic.de/PDF/BTDR-1.pdf)
@@ -79265,8 +79265,8 @@ Drahtschalter
 
 
 0
-0
-0
+2
+2
 Pia_Lib
 ESP32_C3_Wroom_02-easysolder
 
@@ -79281,6 +79281,13 @@ Encoder KY-040
 0
 5
 5
+Pia_Lib
+LED-3Pin
+
+
+0
+3
+3
 Pia_Lib
 QRCode
 
@@ -79321,8 +79328,15 @@ USB_C_and_Oled
 
 
 0
-12
 8
+8
+Pia_Lib
+kuh
+
+
+0
+0
+0
 Potentiometer_SMD
 Potentiometer_ACP_CA6-VSMD_Vertical
 Potentiometer, vertical, ACP CA6-VSMD, http://www.acptechnologies.com/wp-content/uploads/2017/06/01-ACP-CA6.pdf
@@ -90432,3 +90446,10 @@ USB-C_Board
 0
 8
 4
+footprints
+kuh
+
+
+0
+0
+0
