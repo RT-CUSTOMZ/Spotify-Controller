@@ -32,7 +32,6 @@ class Button{
             return time_since_last_button_pressed;
         }
 
-        bool DebouncedButton(uint16_t ms_to_ignore_interrupt);
 };
 
 void OnButtonPressRiseLeft();
