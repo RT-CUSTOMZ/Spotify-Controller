@@ -1,0 +1,32 @@
+﻿Designator,Footprint,Quantity,Value,LCSC Part #
+"3V3_2, 3V3",Pin_D1.3mm_L11.0mm,2,3V3,
+BT1,Battery_holder,1,Battery_Holder,
+"C1_2, C1, C10_2, C10, C4_2, C4",C_Radial_D5.0mm_H11.0mm_P2.00mm_liegend,6,1u,
+"C11_2, C11",C_Disc_D4.7mm_W2.5mm_P5.00mm,2,4n7,DNP
+"C12_2, C12, C2_2, C2, C3_2, C3, C5_2, C5, C6_2, C6",C_Disc_D3.0mm_W2.0mm_P2.50mm,10,100n,
+"D1_2, D1",LED_D3.0mm,2,LED,
+"D2_2, D2, D3_2, D3",D_DO-35_SOD27_P7.62mm_Horizontal,4,1N4148,
+"D4_2, D4, D5_2, D5",D_DO-41_SOD81_P10.16mm_Horizontal,4,1N5819,
+"D6_2, D6",LED-3Pin,2,Zweifarb-LED,
+"GND1_2, GND1",Pin_D1.3mm_L11.0mm,2,GND,
+"J1_2, J1",USB_C_and_Oled,2,Conn_02x04_Top_Bottom,
+"J2_2, J2",PinSocket_1x04_P2.54mm_Vertical,2,Conn_01x04,
+"J3_2, J3",Encoder KY-040,2,Conn_01x05_Socket,
+"J4_2, J4",USB_B_Micro_CN,2,USB_B_Micro,DNP
+"J5_2, J5",PinSocket_1x03_P2.54mm_Vertical,2,Conn_01x03,
+"J6_2, J6, J7_2, J7",PinHeader_1x09_P1.27mm_Vertical,4,Conn_01x09_Pin,
+"R1_2, R1, R11_2, R11, R15_2, R15, R16_2, R16",R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,8,300R,
+"R10_2, R10, R7_2, R7, R9_2, R9",R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,6,22R,
+"R12_2, R12, R13_2, R13, R14_2, R14",0805,6,10k,DNP
+"R2_2, R2, R3_2, R3",R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,4,100R,
+"R4_2, R4, R5_2, R5, R6_2, R6",R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,6,10k,
+"R8_2, R8",R_Axial_DIN0207_L6.3mm_D2.5mm_P10.16mm_Horizontal,2,1M,DNP
+"SW1_2, SW1, SW3_2, SW3, SW4_2, SW4",SW_PUSH_6mm_H7.3mm,6,SW_Push,
+"SW2_2, SW2",SW_PUSH_6mm_H4.3mm,2,SW_Push,
+"SW5_2, SW5",SW_PUSH_6mm_H4.3mm,2,Boot,
+"SW6_2, SW6",RotaryEncoder_Alps_EC11E-Switch_Vertical_H20mm,2,RotaryEncoder_Switch,
+"SW7_2, SW7",Drahtschalter,2,SW_DIP_x01,
+"TP1_2, TP1",Pin_D1.0mm_L10.0mm,2,Bat+,
+"TP2_2, TP2",Pin_D1.0mm_L10.0mm,2,Bat-,
+"U1_2, U1",ESP32_C3_Wroom_02-easysolder,2,ESP32-C3-WROOM-02,
+"U4_2, U4",SOT-23-5,2,AP2112K-3.3,
