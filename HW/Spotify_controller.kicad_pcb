@@ -4257,6 +4257,7 @@
   (footprint "Pia_Lib:USB_B_Micro_CN" (layer "F.Cu")
     (tstamp aa360a86-bb6d-4c7a-9ed0-f50b69eba54f)
     (at 35.022 63.0725 -90)
+    (property "Order Link " "https://www.reichelt.de/usb-buchse-typ-micro-b-smd-gull-wing-mpe-712-1-s-bs0-p263308.html?PROVID=2788&gclid=CjwKCAiAvJarBhA1EiwAGgZl0NEqI-E8U4ifBROS_VqsahALfrSO3HXWrVPk3H4jfoQe-jLzNHP3yxoCJRgQAvD_BwE")
     (property "Sheetfile" "Spotify_controller.kicad_sch")
     (property "Sheetname" "")
     (property "dnp" "")
