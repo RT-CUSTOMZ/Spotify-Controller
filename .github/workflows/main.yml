@@ -15,12 +15,14 @@ on:
       - '.github/workflows/kibot_quick_start.yml'
   repository_dispatch:
     types: [run_qs]
+  workflow_dispatch:
+    
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   quick:
     runs-on: ubuntu-latest
-    container: ghcr.io/inti-cmnb/kicad6_auto_full:latest
+    container: ghcr.io/inti-cmnb/kicad7_auto_full:latest
 
     steps:
     - uses: actions/checkout@v3
