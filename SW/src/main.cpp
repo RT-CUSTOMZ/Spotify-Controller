@@ -13,12 +13,9 @@ void setup() {
   init_pins();
   Serial.begin(460800); 
   delay(100);
-
   InitButtons();
-  ledOn(led_yellow_pin); //Just so I know flashing worked
-  
-  
-   
+  ledOn(led_yellow_pin); //Just so I know flashing worked   
+  SetupWifiManager();
 }
 
 void loop() {
