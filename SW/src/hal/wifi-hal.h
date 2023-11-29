@@ -1,8 +1,8 @@
 #pragma once
 
-#include <WiFi.h>
 
-
-void SetupWifi();
-
-void printWifiStatus();
+void SetupWifiManager();
+void saveConfigCallback ();
+void PrintParameterInformation();
+void SetupWiFi();
+void SaveConfig();
