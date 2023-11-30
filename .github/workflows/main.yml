@@ -30,9 +30,9 @@ jobs:
         # So we can run a diff between last 2 changes
         fetch-depth: '0'
 
-#    - name: Quick Start
-#      run: |
-#        kibot --quick-start --dry
+    - name: Quick Start
+      run: |
+        kibot --quick-start
 
     - name: Retrieve results
       uses: actions/upload-artifact@v2
