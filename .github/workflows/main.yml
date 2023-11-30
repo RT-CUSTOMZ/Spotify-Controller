@@ -7,12 +7,12 @@ on:
     paths:
       - 'HW/*.kicad_sch'
       - 'HW/*.kicad_pcb'
-      - '.github/workflows/kibot_quick_start.yml'
+      - '.github/workflows/main.yml'
   pull_request:
     paths:
       - 'HW/*.kicad_sch'
       - 'HW/*.kicad_pcb'
-      - '.github/workflows/kibot_quick_start.yml'
+      - '.github/workflows/main.yml'
   repository_dispatch:
     types: [run_qs]
   workflow_dispatch:
@@ -30,9 +30,9 @@ jobs:
         # So we can run a diff between last 2 changes
         fetch-depth: '0'
 
-#    - name: Quick Start
-#      run: |
-#        kibot --quick-start --dry
+    - name: Quick Start
+      run: |
+        kibot --quick-start
 
     - name: Retrieve results
       uses: actions/upload-artifact@v2
