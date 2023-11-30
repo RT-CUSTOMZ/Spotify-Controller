@@ -55,7 +55,7 @@ jobs:
         path: Generated
 
     - name: Deploy navigate results
-      uses: JamesIves/github-pages-deploy-action@v4.3.3
+      uses: JamesIves/github-pages-deploy-action@latest
       with:
         branch: main
         folder: Generated
