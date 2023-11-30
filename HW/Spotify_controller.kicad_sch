@@ -9249,7 +9249,7 @@
   (symbol (lib_id "Connector:TestPoint") (at 85.725 33.02 0) (unit 1)
     (in_bom yes) (on_board yes) (dnp no) (fields_autoplaced)
     (uuid 2675837d-1e30-452e-894b-2bb8779a499b)
-    (property "Reference" "3V3?" (at 87.63 29.083 0)
+    (property "Reference" "3V31" (at 87.63 29.083 0)
       (effects (font (size 1.27 1.27)) (justify left))
     )
     (property "Value" "3V3" (at 87.63 31.623 0)
@@ -9265,7 +9265,7 @@
     (instances
       (project "Spotify_controller"
         (path "/5b72fb14-a995-4a92-8291-dd28bff636b0"
-          (reference "3V3?") (unit 1)
+          (reference "3V31") (unit 1)
         )
       )
     )
