@@ -42,11 +42,16 @@ jobs:
 
   # This step is to upload the results to another repo (web pages)
   deploy:
+    permissions:
+      contents: write
     runs-on: ubuntu-latest
     needs: quick
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        lfs: true
+        token: ${{secrets.TOKEN }}
 
     - name: Retrieve results
       uses: actions/download-artifact@v2
