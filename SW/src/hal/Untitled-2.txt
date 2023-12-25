@@ -1,0 +1,22 @@
+client ID: 93509a7dd9a94e668e924281b5b0700c
+9350
+9a7d
+d9a9
+4e66
+8e92
+4281
+b5b0
+700c
+
+redirect URI: http://localhost/
+client secret: 4b4c9931f67241ae9ca974f996a62eb2
+4b4c
+9931
+f672
+41ae
+9ca9
+74f9
+96a6
+2eb2
+
+AQDq-bdIe6iL5z_88wkmpfFV-Yy2Zja_nu7WpjvM3hgegk_HbNDgdDaoEb_Y9Xk-JbOkPYzPwNRSWlPeh7SkyY7MAyNSArA0pQMqECGaEGSvfnVsVd3zUnLwVOWjT07jgxY

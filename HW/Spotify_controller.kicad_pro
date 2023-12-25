@@ -668,8 +668,8 @@
       "idf": "",
       "netlist": "",
       "specctra_dsn": "",
-      "step": "",
-      "vrml": ""
+      "step": "Spotify_controller.step",
+      "vrml": "Spotify_controller.wrl"
     },
     "page_layout_descr_file": ""
   },

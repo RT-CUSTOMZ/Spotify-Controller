@@ -4,5 +4,5 @@
 void SetupWifiManager();
 void saveConfigCallback ();
 void PrintParameterInformation();
-void SetupWiFi();
 void SaveConfig();
+void WifiLoop();

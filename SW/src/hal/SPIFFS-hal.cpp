@@ -47,6 +47,8 @@ void MountFileSystem(){
         auto deserializeError = deserializeJson(json, buf.get());
         serializeJson(json, Serial);
         if ( ! deserializeError ) {
+          //strcpy(destination, source) -> copy values from json file to global variables
+          //TODO: don't use global variables!
           strcpy(spotify_client_id, json["spotify_client_id"]);
           strcpy(spotify_token, json["spotify_token"]);
           strcpy(spotify_client_secret, json["spotify_client_secret"]);

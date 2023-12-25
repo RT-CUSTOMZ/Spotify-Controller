@@ -7,10 +7,10 @@
 
 WiFiClient client;
 
-char spotify_token[40];
-char spotify_client_id[40];
-char spotify_client_secret[40];
-char spotify_redirect_uri[40];
+extern char spotify_token[40];
+extern char spotify_client_id[40];
+extern char spotify_client_secret[40];
+extern char spotify_redirect_uri[40];
 
 
 void SetupWifiManager(){
@@ -34,7 +34,7 @@ void SetupWifiManager(){
 
   //sets timeout until configuration portal gets turned off
   //useful to make it all retry or go to sleep in seconds
-  wifiManager.setTimeout(600);
+  // wifiManager.setTimeout(600);
 
 
   if (!wifiManager.autoConnect("AutoConnectAP", "password")) { //change to have different wifi name and default password
@@ -54,25 +54,34 @@ void SetupWifiManager(){
   PrintParameterInformation(); 
   SaveConfig();
 
+
   Serial.println("local ip");
   Serial.println(WiFi.localIP());
+  
 }
 
 void PrintParameterInformation() {
  Serial.println("The values in the file are: ");
-  Serial.println("\tspotify client id : " + String(spotify_client_id));
-  Serial.println("\tspotify token : " + String(spotify_token));
+  Serial.println("\tspotify client id : "    + String(spotify_client_id));
+  Serial.println("\tspotify token : "        + String(spotify_token));
   Serial.println("\tspotify client secret: " + String(spotify_client_secret));
   Serial.println("\tspotify redirect uri : " + String(spotify_redirect_uri));
 }
 
-void SetupWiFi(){
-  IPAddress server(74,125,115,105);  // Google
 
-  if (client.connect(server, 80)) {
-      Serial.println("connected");
-      // Make a HTTP request:
-      client.println("GET /search?q=arduino HTTP/1.0");
-      client.println();
-    }
+void WifiLoop(){
+  static unsigned long currentMillis = millis();
+  static unsigned long previousMillis = 0;
+  const uint16_t interval = 3000;
+  // if WiFi is down, try reconnecting
+  if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >=interval)) {
+    Serial.println("Reconnecting to WiFi...");
+    WiFi.disconnect();
+    WiFi.reconnect();
+    delay(1000);
+    Serial.println("local ip");
+    Serial.println(WiFi.localIP());
+
+    previousMillis = currentMillis;
+  }
 }

@@ -2,9 +2,16 @@
 #include <Arduino.h>
 #include "pinconfig.h"
 #include "led-hal.h"
+#include <SpotifyESP32.h>
 
 static int16_t StepDelta = 0;             // Counts up or down depending which way the encoder is turned
 static bool outputCount = false;             // Flag to indicate that the value of inputDelta should be printed
+static bool positive = false;             // step was positive
+static bool negative = false;             // step was negative
+static uint16_t last_delta = StepDelta;   //used to determine the next volume
+
+
+extern Spotify sp;
 
 enum EncoderState {
   InitState,
@@ -45,6 +52,7 @@ void readEncoder() {
             if (CLK && DT) {            // Both CLK and DT now high as the encoder completes one step clockwise
                 state = EncoderState::InitState;
                 ++StepDelta;
+                positive = true; 
                 outputCount = true;
             }
             break;
@@ -64,14 +72,68 @@ void readEncoder() {
                 state = EncoderState::InitState;
                 --StepDelta;
                 outputCount = true;
+                negative = true; 
             }
             break; 
+    }
+}
+
+
+void encoderFunction(){
+    response getDevices {sp.available_devices()};
+    bool supports_volume = false;
+    uint8_t volume = 255;
+
+    int16_t difference = last_delta - StepDelta;
+
+    if((getDevices.status_code>=200)&&(getDevices.status_code<=299)){
+
+        DynamicJsonDocument doc(2000);
+        deserializeJson(doc,getDevices.reply);
+        JsonArray devices = doc["devices"].as<JsonArray>();
+
+        for (JsonVariant device : devices) {
+            JsonObject deviceObj = device.as<JsonObject>();
+
+            if (deviceObj["is_active"].as<bool>()) {
+                supports_volume = deviceObj["supports_volume"].as<bool>();
+                volume = deviceObj["volume_percent"].as<uint8_t>();
+                break;
+            }
+        }  
+    }
+
+    if(supports_volume){
+        
+        const uint8_t volume_step = 10; 
+
+        uint8_t total_volume = volume_step*difference;
+
+        if(negative == true){
+            if((volume-total_volume)<0){
+                sp.set_volume(0);
+            }
+            else{
+                sp.set_volume(volume - total_volume);
+            }
+            negative = false;
+        } else if(positive == true){
+            if((volume+total_volume)>100){
+                sp.set_volume(100);
+            } else {
+                sp.set_volume(volume + total_volume);
+            }
+            positive = false;
+        }
+    
+    last_delta = StepDelta;  
     }
 }
 
 void printDelta() {
     if (outputCount) {
         outputCount = false;
+        encoderFunction();
         Serial.println(StepDelta);
     }
 }
