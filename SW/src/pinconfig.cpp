@@ -1,5 +1,4 @@
 #include "pinconfig.h"
-#include "hal/button-hal.h"
 
 
 void init_pins(){

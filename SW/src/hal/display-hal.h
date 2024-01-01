@@ -1,12 +1,20 @@
 #pragma once
-
-#define PIN_WIRE_SDA         (7u)
-#define PIN_WIRE_SCL         (6u)
-
+#include <Arduino.h>
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 32 // OLED display height, in pixels
 #define OLED_RESET     -1 // Reset pin # (or -1 if sharing Arduino reset pin)
-#define SCREEN_ADDRESS 0x78 ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+#define SCREEN_ADDRESS 0x3C ///< See datasheet for Address; 0x3D for 128x64, 0x3C for 128x32
+
+
+
+
+
+#define LOGO_HEIGHT   16
+#define LOGO_WIDTH    16
+
+
+void testscrolltext(char* text1, char* text2, uint8_t positionY1=0 , uint8_t positionY2 = 60);
+void testdrawbitmap();
 
 void init_display();
 void display_loop();

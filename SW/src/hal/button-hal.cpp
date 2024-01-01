@@ -61,7 +61,7 @@ void ButtonLoop(){
     if(HIGH == buttonMiddle.GetStateChanged()){
         Serial.printf("B2\t%d\n", buttonMiddle.ms.TimeDifference());
         buttonMiddle.ms.SetLastPressed();
-        if(sp.isPlaying()){
+        if(sp.is_playing()){
             sp.pause_playback();
             Serial.printf("pause\n");
         } else {

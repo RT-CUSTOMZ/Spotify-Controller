@@ -1,3 +1,4 @@
+#define SSD1306_NO_SPLASH
 #include <Arduino.h>
 
 #include "hal/led-hal.h"
@@ -20,11 +21,11 @@ void change_volume( uint8_t volume);
 using namespace Spotify_types;
 
 
-void loop2(void* pvParameters){
-  while(1){
-    readEncoder();
-  }
-}
+// void loop2(void* pvParameters){
+//   while(1){
+//     readEncoder();
+//   }
+// }
 char refresh_token[] = "AQDq-bdIe6iL5z_88wkmpfFV-Yy2Zja_nu7WpjvM3hgegk_HbNDgdDaoEb_Y9Xk-JbOkPYzPwNRSWlPeh7SkyY7MAyNSArA0pQMqECGaEGSvfnVsVd3zUnLwVOWjT07jgxY";
 Spotify sp(refresh_token, 
            spotify_redirect_uri, 
@@ -35,17 +36,22 @@ Spotify sp(refresh_token,
 
 
 void setup() {
-  init_pins();
 
+  init_pins();
   Serial.begin(460800); 
-  delay(100);
+  
+  while (!Serial)
+     delay(10);
+  
 
   initButtons();
 
   ledOn(led_dual_red); //Just so I know flashing worked   
   SetupWifiManager();
-
-  auto is_playing = sp.isPlaying();
+  
+  init_display();
+  
+  auto is_playing = sp.is_playing();
   Serial.println((is_playing)?"currently playing":"not playing");
   if(is_playing){
 
@@ -62,19 +68,6 @@ void setup() {
   // auto is_playing = sp.currently_playing();
   // Serial.println(is_playing.reply);
   Serial.println("--------------------");
-
-
-  
-  // print_response(sp.shuffle(SHUFFLE_ON));
-
-  xTaskCreate (
-    &loop2,     // Function to implement the task
-    "loop2_task",   // Name of the task
-    300,      // Stack size in bytes
-    NULL,      // Task input parameter
-    0,         // Priority of the task
-    NULL      // Task handle.
-  );
 }
 
 void loop() {
@@ -83,7 +76,8 @@ void loop() {
   readEncoder();
   ButtonLoop();
   readEncoder();
-  // WifiLoop();
+  display_loop();
+  WifiLoop();
 }
 
 
