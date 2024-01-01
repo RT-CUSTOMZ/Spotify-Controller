@@ -74,7 +74,8 @@ void WifiLoop(){
   static unsigned long previousMillis = 0;
   const uint16_t interval = 3000;
   // if WiFi is down, try reconnecting
-  if ((WiFi.status() != WL_CONNECTED) && (currentMillis - previousMillis >=interval)) {
+  if ((   WiFi.status() != WL_CONNECTED) 
+      && ((currentMillis - previousMillis) >=interval)) {
     Serial.println("Reconnecting to WiFi...");
     WiFi.disconnect();
     WiFi.reconnect();
