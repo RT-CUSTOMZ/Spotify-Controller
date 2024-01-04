@@ -10,7 +10,7 @@
 #include "pinconfig.h"
 
 #include "spotify_functions/button-play-and-pause.h"
-#include <SpotifyESP32.h>
+#include "SpotifyESP32.h"
 
 char spotify_token[40];
 char spotify_client_id[40];

@@ -64,7 +64,9 @@ void init_display(){
   delay(1000);
   display.invertDisplay(false);
   delay(1000);
-  testscrolltext("Song", "Artist");    // Draw scrolling text
+  char Song[] = "Song";
+  char Interpreter[] = "Interpreter";
+  testscrolltext(Song, Interpreter);    // Draw scrolling text
 }
 
 void display_loop(){  
