@@ -7,8 +7,6 @@
 
 static int16_t new_step_value = 0;             // Counts up or down depending which way the encoder is turned
 static bool outputCount = false;             // Flag to indicate that the value of inputDelta should be printed
-static bool positive = false;             // step was positive
-static bool negative = false;             // step was negative
 static uint16_t last_step_value = new_step_value;   //used to determine the next volume
 static uint8_t encoder_last_changed = 0;
 
@@ -27,11 +25,11 @@ enum EncoderState {
 
 Button encoderDt;
 Button encoderClk;
-const uint16_t time_to_change = 250;
 
 
 
-void readEncoder() {
+
+void EncoderLoop() {
     static EncoderState state = EncoderState::InitState;
     bool CLK = digitalRead(encoder_clk);
     bool DT = digitalRead(encoder_dt);
@@ -42,6 +40,17 @@ void readEncoder() {
                 state = EncoderState::ClockwiseRotationA;
             } else if (!DT) {           // Turn anticlockwise and DT goes low first
                 state = EncoderState::CounterClockwiseRotationA;
+            } else {
+                 if(outputCount == true){
+                    uint16_t encoder_current_change = millis();
+                    if((encoder_current_change - encoder_last_changed) >= 700){
+                        response getDevices {sp.available_devices()};
+                        uint8_t volume = getCurrentVolumeFromSpotify(getDevices);
+                        calculateAndSetNewSpotifyVolume(volume);
+                        Serial.println(new_step_value);
+                        outputCount = false;
+                    }
+                }
             }
             break;
         
@@ -58,10 +67,11 @@ void readEncoder() {
             break;
         case EncoderState::ClockwiseRotationC:
             if (CLK && DT) {            // Both CLK and DT now high as the encoder completes one step clockwise
-                state = EncoderState::InitState;
-                ++new_step_value;
-                positive = true; 
+                new_step_value++;
                 outputCount = true;
+                Serial.printf("+");
+                encoder_last_changed = millis();
+                state = EncoderState::InitState;
             }
             break;
         // Anticlockwise rotation
@@ -77,16 +87,20 @@ void readEncoder() {
             break;
         case EncoderState::CounterClockwiseRotationC:
             if (CLK && DT) {
-                state = EncoderState::InitState;
-                --new_step_value;
+                new_step_value--;
                 outputCount = true;
-                negative = true; 
+                Serial.printf("-");
                 encoder_last_changed = millis();
+                state = EncoderState::InitState;
             }
             break; 
         
     }
+   
+
 }
+
+
 
 uint8_t getCurrentVolumeFromSpotify(response get_devices){
     bool supports_volume = false;
@@ -118,49 +132,27 @@ uint8_t getCurrentVolumeFromSpotify(response get_devices){
 
 void calculateAndSetNewSpotifyVolume(uint8_t current_volume){
 
-    int16_t step_difference = last_step_value - new_step_value;
+    int16_t step_difference = new_step_value - last_step_value; //can be positive and negative
+    Serial.printf("Step difference: %d", step_difference);
+    Serial.printf("Current volume: %d", current_volume);
 
-    if(current_volume <= 100){      // can also be UINT8_MAX if volume control is not supported
+
+    if(current_volume <= 100){
         const uint8_t volume_step_size = 10; //this is how much volume is added/substraceted on one rotation
 
         uint8_t new_volume_difference = volume_step_size*step_difference; // later add or substract this volume from the previous
+        current_volume = current_volume + new_volume_difference;
 
-        if(negative == true){
-
-            if((current_volume - new_volume_difference) < 0){
-                current_volume = 0;
-            }
-            else{
-                current_volume = current_volume - new_volume_difference;
-            }
-            negative = false;
-
-        } else if(positive == true){
-            if((current_volume + new_volume_difference) > 100){
-                current_volume = 100;
-            } else {
-                current_volume = current_volume + new_volume_difference;
-            }
-            positive = false;
+        if(current_volume < 0){
+            current_volume = 0;
+        }else if(current_volume > 100){
+            current_volume = 100;
         }
+        
         Serial.println(current_volume);
         sp.set_volume(current_volume);
         last_step_value = new_step_value;  
     }
 }
 
-void printDelta() {
-    if (outputCount) {
-        outputCount = false;
-        
-        response getDevices {sp.available_devices()};
-        uint8_t volume = getCurrentVolumeFromSpotify(getDevices);
-    
-        uint8_t encoder_current_change = millis();
-        if((encoder_last_changed-encoder_current_change) <= 1500){
-            calculateAndSetNewSpotifyVolume(volume);
-        }
 
-        Serial.println(new_step_value);
-    }
-}

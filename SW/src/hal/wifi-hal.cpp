@@ -13,7 +13,7 @@ extern char spotify_client_secret[40];
 extern char spotify_redirect_uri[40];
 
 
-void SetupWifiManager(){
+void InitWifiManager(){
   MountFileSystem();
 
   WiFiManagerParameter spotify_custom_client_id("id", "client id", spotify_client_id, 40);

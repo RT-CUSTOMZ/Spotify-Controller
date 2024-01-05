@@ -30,4 +30,4 @@ const uint8_t encoder_clk = 3;
 const uint8_t encoder_dt = 4;
 const uint8_t encoder_sw = 5;
 
-void init_pins();
+void InitPins();

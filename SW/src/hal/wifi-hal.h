@@ -1,7 +1,7 @@
 #pragma once
 
 
-void SetupWifiManager();
+void InitWifiManager();
 void saveConfigCallback ();
 void PrintParameterInformation();
 void SaveConfig();

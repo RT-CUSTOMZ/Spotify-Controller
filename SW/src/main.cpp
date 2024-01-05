@@ -11,6 +11,7 @@
 
 #include "spotify_functions/button-play-and-pause.h"
 #include "SpotifyESP32.h"
+#include <TaskScheduler.h>
 
 char spotify_token[40];
 char spotify_client_id[40];
@@ -20,13 +21,11 @@ char spotify_redirect_uri[40];
 void change_volume( uint8_t volume);
 using namespace Spotify_types;
 
+// Scheduler
+Scheduler ts;
 
-// void loop2(void* pvParameters){
-//   while(1){
-//     readEncoder();
-//   }
-// }
 char refresh_token[] = "AQDq-bdIe6iL5z_88wkmpfFV-Yy2Zja_nu7WpjvM3hgegk_HbNDgdDaoEb_Y9Xk-JbOkPYzPwNRSWlPeh7SkyY7MAyNSArA0pQMqECGaEGSvfnVsVd3zUnLwVOWjT07jgxY";
+
 Spotify sp(refresh_token, 
            spotify_redirect_uri, 
            spotify_client_id, 
@@ -34,31 +33,39 @@ Spotify sp(refresh_token,
            false
         );//Set last Parameter to true to get more debug information
 
+//Tasks
+#define PERIOD1 500
+#define DURATION1 20
+Task tDisplay ( PERIOD1 * TASK_MILLISECOND, DURATION1 / PERIOD1, &DisplayLoop, &ts, true );
+
+#define PERIOD2 1000
+#define DURATION2 1
+Task tWifi ( PERIOD2 * TASK_MILLISECOND, DURATION2 / PERIOD2, &WifiLoop, &ts, true );
+
+
 
 void setup() {
 
-  init_pins();
+  InitPins();
   Serial.begin(460800); 
   
   while (!Serial)
      delay(10);
   
 
-  initButtons();
-
-  ledOn(led_dual_red); //Just so I know flashing worked   
-  SetupWifiManager();
-  
-  init_display();
+  InitButtons(); 
+  InitWifiManager();
+  InitDisplay();
   
   auto is_playing = sp.is_playing();
   Serial.println((is_playing)?"currently playing":"not playing");
-  if(is_playing){
 
+  if(is_playing){
   Serial.print("Current Track: ");
   Serial.print(sp.current_track_name());
   Serial.print(" by ");
   Serial.println(sp.current_artist_names());
+
   }
   
   auto reply = sp.available_devices();
@@ -71,13 +78,9 @@ void setup() {
 }
 
 void loop() {
-  readEncoder();
-  printDelta();
-  readEncoder();
+  ts.execute();
+  EncoderLoop();
   ButtonLoop();
-  readEncoder();
-  display_loop();
-  WifiLoop();
 }
 
 

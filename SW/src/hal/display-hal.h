@@ -16,5 +16,5 @@
 void testscrolltext(char* text1, char* text2, uint8_t positionY1=0 , uint8_t positionY2 = 60);
 void testdrawbitmap();
 
-void init_display();
-void display_loop();
+void InitDisplay();
+void DisplayLoop();

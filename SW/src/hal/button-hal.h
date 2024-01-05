@@ -25,7 +25,7 @@ void OnButtonEncoderPress();
 /*
 Initializes the counter of each button and attaches Interrupts to the correspondent Pin. 
 */
-void initButtons();
+void InitButtons();
 
 /*
 Of a Button Changed, the Function handles what shall be done in each case and resets 

@@ -1,7 +1,7 @@
 #include "pinconfig.h"
 
 
-void init_pins(){
+void InitPins(){
     // Buttons to Input Pullup (savety precaution)
     pinMode(button_left, INPUT_PULLUP);
     pinMode(button_middle, INPUT_PULLUP);

@@ -38,7 +38,7 @@ void OnButtonEncoderPress() {
 }
 
 
-void initButtons(){
+void InitButtons(){
     buttonLeft.ms.SetLastPressed();
     buttonMiddle.ms.SetLastPressed();
     buttonRight.ms.SetLastPressed();
