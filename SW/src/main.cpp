@@ -52,6 +52,7 @@ void setup() {
   while (!Serial)
      delay(10);
   
+  ledOn(led_dual_green);
 
   InitButtons(); 
   InitWifiManager();
